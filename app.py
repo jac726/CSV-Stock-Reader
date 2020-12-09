@@ -115,7 +115,6 @@ def secondWindowCreator():
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
         percentageGrowth = currentCost - entranceCost
         percentageGrowth = percentageGrowth/entranceCost * 100
-        percentageGrowth = str(round(percentageGrowth,2)) + "%"
 
         total += entranceCost
         newTotal += currentCost
