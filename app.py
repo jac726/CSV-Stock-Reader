@@ -93,6 +93,7 @@ def secondWindowCreator():
     Label(thirdWindowFrame,text='Total Cost').grid(row=0,column=5,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='Current Value').grid(row=0,column=6,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='% Growth').grid(row=0,column=7,sticky="nsew",padx=1,pady=1)
+    Label(thirdWindowFrame,text='Day Change').grid(row=0,column=8,sticky="nsew",padx=1,pady=1)
 
     thirdWindowFrame.grid_columnconfigure(0,weight=1)
     thirdWindowFrame.grid_columnconfigure(1,weight=1)
@@ -102,6 +103,7 @@ def secondWindowCreator():
     thirdWindowFrame.grid_columnconfigure(5,weight=1)
     thirdWindowFrame.grid_columnconfigure(6,weight=1)
     thirdWindowFrame.grid_columnconfigure(7,weight=1)
+    thirdWindowFrame.grid_columnconfigure(8,weight=1)
 
     for x in df.index:
         currentTicker = df.iloc[x][0]
@@ -111,21 +113,25 @@ def secondWindowCreator():
         colors.append(colorList[x])
         sizes.append(currentCost)
 
+        previousCloseValue = currentInfo['previousClose'] * df.iloc[x][1]
+        dayGrowth = (currentCost - previousCloseValue)/ previousCloseValue * 100
+        dayGrowth = round(dayGrowth,2)
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
         percentageGrowth = (currentCost - entranceCost) / entranceCost * 100
         percentageGrowth = round(percentageGrowth,2)
-        
+
         total += entranceCost
         newTotal += currentCost
 
-        currentCost = '$' + str(currentCost)
+        currentCost = '$' + str(round(currentCost,2))
         entranceCost = '$' + str(entranceCost)
         percentageGrowth = str(percentageGrowth) + '%'
         averageEntry = '$'+ str(df.iloc[x][2])
+        dayGrowth = str(dayGrowth) + '%'
 
-        Label(thirdWindowFrame,text=currentTicker).grid(row=x+1,column=0,sticky="nsew",padx=1,pady=1)
+        Button(thirdWindowFrame,text=currentTicker,bd=0,command=lambda: plotChartMaker(currentTicker)).grid(row=x+1,column=0,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=df.iloc[x][1]).grid(row=x+1,column=1,sticky="nsew",padx=1,pady=1)
-        Button(thirdWindowFrame,text=currentInfo['shortName'],bd=0,command=lambda: plotChartMaker(currentTicker)).grid(row=x+1,column=2,sticky="nsew",padx=1,pady=1)
+        Label(thirdWindowFrame,text=currentInfo['shortName']).grid(row=x+1,column=2,sticky="nsew",padx=1,pady=1)
         try:
             value = currentInfo['sector']
         except:
@@ -135,6 +141,7 @@ def secondWindowCreator():
         Label(thirdWindowFrame,text=entranceCost).grid(row=x+1,column=5,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=currentCost).grid(row=x+1,column=6,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=percentageGrowth).grid(row=x+1,column=7,sticky="nsew",padx=1,pady=1)
+        Label(thirdWindowFrame,text=dayGrowth).grid(row=x+1,column=8,sticky="nsew",padx=1,pady=1)
 
         thirdWindowFrame.grid_columnconfigure(0,weight=1)
         thirdWindowFrame.grid_columnconfigure(1,weight=1)
