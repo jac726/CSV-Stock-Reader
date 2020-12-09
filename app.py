@@ -62,9 +62,7 @@ def sort(unsorted,names):
 
 def pieChartCreator(sizes,labels,colors):
 
-    sortResult = sort(sizes,labels)
-    sizes = sortResult[0]
-    sortedNames = sortResult[1]
+    sizes,sortedNames = sort(sizes,labels)
 
     plt.pie(sizes,labels=sortedNames,colors=colors,autopct='%1.f%%',pctdistance=.9)
     plt.axis('equal')
