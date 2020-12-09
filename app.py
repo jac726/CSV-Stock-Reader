@@ -106,16 +106,15 @@ def secondWindowCreator():
     for x in df.index:
         currentTicker = df.iloc[x][0]
         currentInfo = yf.Ticker(currentTicker).info
-        currentCost = currentInfo['regularMarketPrice']*df.iloc[x][1]
-        currentCost = round(currentCost,2)
+        currentCost = stockquotes.Stock(currentTicker).current_price *df.iloc[x][1]
         labels.append(currentInfo['shortName'])
         colors.append(colorList[x])
         sizes.append(currentCost)
 
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
-        percentageGrowth = currentCost - entranceCost
-        percentageGrowth = percentageGrowth/entranceCost * 100
-
+        percentageGrowth = (currentCost - entranceCost) / entranceCost * 100
+        percentageGrowth = round(percentageGrowth,2)
+        
         total += entranceCost
         newTotal += currentCost
 
