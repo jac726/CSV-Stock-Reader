@@ -82,6 +82,7 @@ def secondWindowCreator():
     colors = []
     sizes = []
     total = 0
+    newTotal = 0
 
 
     Label(thirdWindowFrame,text='Ticker').grid(row=0,column=0,sticky="nsew",padx=1,pady=1)
@@ -116,7 +117,13 @@ def secondWindowCreator():
         percentageGrowth = percentageGrowth/entranceCost * 100
         percentageGrowth = str(round(percentageGrowth,2)) + "%"
 
-        total += currentCost
+        total += entranceCost
+        newTotal += currentCost
+
+        currentCost = '$' + str(currentCost)
+        entranceCost = '$' + str(entranceCost)
+        percentageGrowth = str(percentageGrowth) + '%'
+        averageEntry = '$'+ str(df.iloc[x][2])
 
         Label(thirdWindowFrame,text=currentTicker).grid(row=x+1,column=0,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=df.iloc[x][1]).grid(row=x+1,column=1,sticky="nsew",padx=1,pady=1)
@@ -126,7 +133,7 @@ def secondWindowCreator():
         except:
             value = "Index Fund"
         Label(thirdWindowFrame,text=value).grid(row=x+1,column=3,sticky="nsew",padx=1,pady=1)
-        Label(thirdWindowFrame,text=df.iloc[x][2]).grid(row=x+1,column=4,sticky="nsew",padx=1,pady=1)
+        Label(thirdWindowFrame,text=averageEntry).grid(row=x+1,column=4,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=entranceCost).grid(row=x+1,column=5,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=currentCost).grid(row=x+1,column=6,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=percentageGrowth).grid(row=x+1,column=7,sticky="nsew",padx=1,pady=1)
@@ -141,9 +148,17 @@ def secondWindowCreator():
         thirdWindowFrame.grid_columnconfigure(7,weight=1)
         thirdWindowFrame.grid_columnconfigure(8,weight=1)
 
-    Label(secondWindowFrame,text='Portfolio Breakdown').grid(row=0,column=0,columnspan=2)
-    Button(secondWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=1,column=0)
-    Button(secondWindowFrame,text='Close',command=root.destroy).grid(row=1,column=1)
+    portfolioGrowth = (newTotal-total) / total * 100
+    portfolioGrowth = str(round(portfolioGrowth,2)) + "%"
+    newTotal = '$' + str(newTotal)
+
+    Label(secondWindowFrame,text='Portfolio Breakdown').grid(row=1,column=0)
+    Label(secondWindowFrame,text='Total Value').grid(row=0,column=1)
+    Label(secondWindowFrame,text='Portfolio Growth').grid(row=0,column=2)
+    Label(secondWindowFrame,text=newTotal).grid(row=1,column=1)
+    Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=2)
+    Button(secondWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
+    Button(secondWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
 
     secondWindowFrame.pack()
     thirdWindowFrame.pack(fill="both")
