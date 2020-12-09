@@ -16,6 +16,7 @@ root.iconbitmap('c:/Users/jchur/Documents/College/Python App/pie-chart-32.ico')
 inputFrame = Frame(root)
 secondWindowFrame = Frame(root)
 thirdWindowFrame = Frame(root)
+bottomWindowFrame = Frame(root)
 
 v = StringVar()
 df = None
@@ -162,11 +163,13 @@ def secondWindowCreator():
     Label(secondWindowFrame,text='Portfolio Growth').grid(row=0,column=2)
     Label(secondWindowFrame,text=newTotal).grid(row=1,column=1)
     Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=2)
-    Button(secondWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
-    Button(secondWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
+
+    Button(bottomWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
+    Button(bottomWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
 
     secondWindowFrame.pack()
     thirdWindowFrame.pack(fill="both")
+    bottomWindowFrame.pack()
 
 Label(inputFrame,text='File Path',padx=20,pady=20).grid(row=0,column=0)
 entry = Entry(inputFrame, textvariable=v).grid(row=0, column=1,columnspan=2)
