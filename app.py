@@ -8,23 +8,28 @@ import matplotlib.pyplot as plt
 import stockquotes
 import pandas as pd
 
+# Creating Base Root
 root = Tk()
+
+#Adjusting the size, naming, and creating icon
 root.geometry('300x200')
 root.title("Portfolio Tracker")
 root.iconbitmap('c:/Users/jchur/Documents/College/Python App/pie-chart-32.ico')
 
+# Creating different frames (input is for file, secondWindowFrame is for labels, thirdWindowFrame is for stock data, bottomWindowFrame is for buttons)
 inputFrame = Frame(root)
 secondWindowFrame = Frame(root)
 thirdWindowFrame = Frame(root)
 bottomWindowFrame = Frame(root)
 
+colorList = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
+
 v = StringVar()
 df = None
 df_checker = False
 
-colorList = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
-
 def import_csv_data():
+    # importing csv data to a df
     global v
     global df
     global df_checker
@@ -34,6 +39,7 @@ def import_csv_data():
     df_checker = True
 
 def submit_button():
+    # submit button to transition to second window dataframe
     if df_checker:
         inputFrame.destroy()
         secondWindowCreator()
@@ -43,7 +49,7 @@ def submit_button():
         button_close = Button(window, text="Close",command = window.destroy).pack()
 
 def sort(unsorted,names):
-
+    # sort function that orders stock name and value from largeset position to smallest
     sortedNames = []
     maxList = []
     heapify(maxList)
@@ -62,7 +68,7 @@ def sort(unsorted,names):
     return (retList,sortedNames)
 
 def pieChartCreator(sizes,labels,colors):
-
+    # using passed data to create pie chart in new window
     sizes,sortedNames = sort(sizes,labels)
 
     plt.pie(sizes,labels=sortedNames,colors=colors,autopct='%1.f%%',pctdistance=.9)
@@ -70,13 +76,14 @@ def pieChartCreator(sizes,labels,colors):
     plt.show()
 
 def plotChartMaker(ticker):
-
+    # not working yet but shows the max length stock chart for ticker
     tickerHolder = yf.Ticker(ticker)
     tickerHolderdf = tickerHolder.history(period='max')
     tickerHolderdf['Close'].plot(title=str(ticker) + " stock price")
     plt.show()
 
 def secondWindowCreator():
+
     root.geometry('1000x500')
 
     labels = []
@@ -84,7 +91,6 @@ def secondWindowCreator():
     sizes = []
     total = 0
     newTotal = 0
-
 
     Label(thirdWindowFrame,text='Ticker').grid(row=0,column=0,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='Number of Shares').grid(row=0,column=1,sticky="nsew",padx=1,pady=1)
@@ -167,7 +173,7 @@ def secondWindowCreator():
     Label(secondWindowFrame,text=newTotal).grid(row=1,column=2)
     Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=3)
 
-    Button(bottomWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
+    Button(bottomWindowFrame,text='Portfolio Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
     Button(bottomWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
 
     secondWindowFrame.pack()
