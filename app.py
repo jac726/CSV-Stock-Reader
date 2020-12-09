@@ -157,12 +157,15 @@ def secondWindowCreator():
     portfolioGrowth = (newTotal-total) / total * 100
     portfolioGrowth = str(round(portfolioGrowth,2)) + "%"
     newTotal = '$' + str(round(newTotal,2))
+    total = '$' + str(round(total,2))
 
     Label(secondWindowFrame,text='Portfolio Breakdown').grid(row=1,column=0)
-    Label(secondWindowFrame,text='Total Value').grid(row=0,column=1)
-    Label(secondWindowFrame,text='Portfolio Growth').grid(row=0,column=2)
-    Label(secondWindowFrame,text=newTotal).grid(row=1,column=1)
-    Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=2)
+    Label(secondWindowFrame,text='Portfolio Cost').grid(row=0,column=1)
+    Label(secondWindowFrame,text='Portfolio Value').grid(row=0,column=2)
+    Label(secondWindowFrame,text='Portfolio Growth').grid(row=0,column=3)
+    Label(secondWindowFrame,text=total).grid(row=1,column=1)
+    Label(secondWindowFrame,text=newTotal).grid(row=1,column=2)
+    Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=3)
 
     Button(bottomWindowFrame,text='Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
     Button(bottomWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
