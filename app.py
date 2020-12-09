@@ -41,8 +41,9 @@ def submit_button():
         label = Label(window,text="Must submit a file").pack()
         button_close = Button(window, text="Close",command = window.destroy).pack()
 
-def sort(unsorted,names,sortedNames):
+def sort(unsorted,names):
 
+    sortedNames = []
     maxList = []
     heapify(maxList)
     translateDict = {}
@@ -57,14 +58,15 @@ def sort(unsorted,names,sortedNames):
         retList.append(element)
         sortedNames.append(translateDict[element][1])
 
-    return retList
+    return (retList,sortedNames)
 
 def pieChartCreator(sizes,labels,colors):
 
-    sortedNames = []
-    sizes = sort(sizes,labels,sortedNames)
+    sortResult = sort(sizes,labels)
+    sizes = sortResult[0]
+    sortedNames = sortResult[1]
 
-    plt.pie(sizes,labels=labels,colors=colors,autopct='%1.f%%',pctdistance=.9)
+    plt.pie(sizes,labels=sortedNames,colors=colors,autopct='%1.f%%',pctdistance=.9)
     plt.axis('equal')
     plt.show()
 
