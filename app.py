@@ -156,7 +156,7 @@ def secondWindowCreator():
 
     portfolioGrowth = (newTotal-total) / total * 100
     portfolioGrowth = str(round(portfolioGrowth,2)) + "%"
-    newTotal = '$' + str(newTotal)
+    newTotal = '$' + str(round(newTotal,2))
 
     Label(secondWindowFrame,text='Portfolio Breakdown').grid(row=1,column=0)
     Label(secondWindowFrame,text='Total Value').grid(row=0,column=1)
