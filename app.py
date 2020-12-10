@@ -90,7 +90,9 @@ def colorChooser(varName):
 
 def secondWindowCreator():
 
-    root.geometry('1000x500')
+    geometryString = len(df.index)*54 + 162
+    geometryString = str(geometryString) + 'x500'
+    root.geometry(geometryString)
 
     labels = []
     colors = []
