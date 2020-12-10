@@ -113,6 +113,7 @@ def secondWindowCreator():
     thirdWindowFrame.grid_columnconfigure(8,weight=1)
 
     for x in df.index:
+
         currentTicker = df.iloc[x][0]
         currentInfo = yf.Ticker(currentTicker).info
         currentCost = stockquotes.Stock(currentTicker).current_price *df.iloc[x][1]
@@ -123,6 +124,12 @@ def secondWindowCreator():
         previousCloseValue = currentInfo['previousClose'] * df.iloc[x][1]
         dayGrowth = (currentCost - previousCloseValue)/ previousCloseValue * 100
         dayGrowth = round(dayGrowth,2)
+
+        if dayGrowth>=0:
+            dayGrowthColor = '#00FF7F'
+        else:
+            dayGrowthColor = '#F08080'
+
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
         percentageGrowth = (currentCost - entranceCost) / entranceCost * 100
         percentageGrowth = round(percentageGrowth,2)
@@ -148,7 +155,7 @@ def secondWindowCreator():
         Label(thirdWindowFrame,text=entranceCost).grid(row=x+1,column=5,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=currentCost).grid(row=x+1,column=6,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=percentageGrowth).grid(row=x+1,column=7,sticky="nsew",padx=1,pady=1)
-        Label(thirdWindowFrame,text=dayGrowth).grid(row=x+1,column=8,sticky="nsew",padx=1,pady=1)
+        Label(thirdWindowFrame,text=dayGrowth,bg=dayGrowthColor).grid(row=x+1,column=8,sticky="nsew",padx=1,pady=1)
 
         thirdWindowFrame.grid_columnconfigure(0,weight=1)
         thirdWindowFrame.grid_columnconfigure(1,weight=1)
