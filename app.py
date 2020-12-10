@@ -82,6 +82,12 @@ def plotChartMaker(ticker):
     tickerHolderdf['Close'].plot(title=str(ticker) + " stock price")
     plt.show()
 
+def colorChooser(varName):
+    if varName>= 0:
+        return '#00FF7F'
+    else:
+        return '#F08080'
+
 def secondWindowCreator():
 
     root.geometry('1000x500')
@@ -126,10 +132,7 @@ def secondWindowCreator():
         dayGrowth = (currentCost - previousCloseValue)/ previousCloseValue * 100
         dayGrowth = round(dayGrowth,2)
 
-        if dayGrowth>=0:
-            dayGrowthColor = '#00FF7F' # spring green
-        else:
-            dayGrowthColor = '#F08080' # light coral
+        dayGrowthColor = colorChooser(dayGrowth)
 
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
         percentageGrowth = (currentCost - entranceCost) / entranceCost * 100
@@ -173,10 +176,7 @@ def secondWindowCreator():
     portfolioGrowth = str(round(portfolioGrowth,2)) + "%"
     portfolioDailyGrowth = (newTotal-pastCloseTotal)/pastCloseTotal *100
 
-    if portfolioDailyGrowth>=0:
-        dayPortfolioGrowthColor = '#00FF7F' # spring green
-    else:
-        dayPortfolioGrowthColor = '#F08080' # light coral
+    dayPortfolioGrowthColor = colorChooser(portfolioDailyGrowth)
 
     portfolioDailyGrowth = str(round(portfolioDailyGrowth,2)) + '%'
     newTotal = '$' + str(round(newTotal,2))
