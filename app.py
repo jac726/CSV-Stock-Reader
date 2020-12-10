@@ -126,9 +126,9 @@ def secondWindowCreator():
         dayGrowth = round(dayGrowth,2)
 
         if dayGrowth>=0:
-            dayGrowthColor = '#00FF7F'
+            dayGrowthColor = '#00FF7F' # spring green
         else:
-            dayGrowthColor = '#F08080'
+            dayGrowthColor = '#F08080' # light coral
 
         entranceCost = df.iloc[x][2]*df.iloc[x][1]
         percentageGrowth = (currentCost - entranceCost) / entranceCost * 100
