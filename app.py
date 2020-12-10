@@ -91,9 +91,10 @@ def secondWindowCreator():
     sizes = []
     total = 0
     newTotal = 0
+    pastCloseTotal = 0
 
     Label(thirdWindowFrame,text='Ticker').grid(row=0,column=0,sticky="nsew",padx=1,pady=1)
-    Label(thirdWindowFrame,text='Number of Shares').grid(row=0,column=1,sticky="nsew",padx=1,pady=1)
+    Label(thirdWindowFrame,text='#').grid(row=0,column=1,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='Name').grid(row=0,column=2,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='Sector').grid(row=0,column=3,sticky="nsew",padx=1,pady=1)
     Label(thirdWindowFrame,text='Average Entry').grid(row=0,column=4,sticky="nsew",padx=1,pady=1)
@@ -136,6 +137,7 @@ def secondWindowCreator():
 
         total += entranceCost
         newTotal += currentCost
+        pastCloseTotal += previousCloseValue
 
         currentCost = '$' + str(round(currentCost,2))
         entranceCost = '$' + str(entranceCost)
@@ -155,7 +157,7 @@ def secondWindowCreator():
         Label(thirdWindowFrame,text=entranceCost).grid(row=x+1,column=5,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=currentCost).grid(row=x+1,column=6,sticky="nsew",padx=1,pady=1)
         Label(thirdWindowFrame,text=percentageGrowth).grid(row=x+1,column=7,sticky="nsew",padx=1,pady=1)
-        Label(thirdWindowFrame,text=dayGrowth,bg=dayGrowthColor).grid(row=x+1,column=8,sticky="nsew",padx=1,pady=1)
+        Label(thirdWindowFrame,text=dayGrowth,bg=dayGrowthColor).grid(row=x+1,column=8,sticky="nsew",padx=2,pady=1)
 
         thirdWindowFrame.grid_columnconfigure(0,weight=1)
         thirdWindowFrame.grid_columnconfigure(1,weight=1)
@@ -169,6 +171,14 @@ def secondWindowCreator():
 
     portfolioGrowth = (newTotal-total) / total * 100
     portfolioGrowth = str(round(portfolioGrowth,2)) + "%"
+    portfolioDailyGrowth = (newTotal-pastCloseTotal)/pastCloseTotal *100
+
+    if portfolioDailyGrowth>=0:
+        dayPortfolioGrowthColor = '#00FF7F' # spring green
+    else:
+        dayPortfolioGrowthColor = '#F08080' # light coral
+
+    portfolioDailyGrowth = str(round(portfolioDailyGrowth,2)) + '%'
     newTotal = '$' + str(round(newTotal,2))
     total = '$' + str(round(total,2))
 
@@ -176,9 +186,11 @@ def secondWindowCreator():
     Label(secondWindowFrame,text='Portfolio Cost').grid(row=0,column=1)
     Label(secondWindowFrame,text='Portfolio Value').grid(row=0,column=2)
     Label(secondWindowFrame,text='Portfolio Growth').grid(row=0,column=3)
+    Label(secondWindowFrame,text='Portfolio Daily Growth').grid(row=0,column=4)
     Label(secondWindowFrame,text=total).grid(row=1,column=1)
     Label(secondWindowFrame,text=newTotal).grid(row=1,column=2)
     Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=3)
+    Label(secondWindowFrame,text=portfolioDailyGrowth,bg=dayPortfolioGrowthColor).grid(row=1,column=4)
 
     Button(bottomWindowFrame,text='Refresh',command=secondWindowCreator).grid(row=0,column=0)
     Button(bottomWindowFrame,text='Portfolio Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=0,column=1)
