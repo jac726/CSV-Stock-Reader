@@ -173,8 +173,9 @@ def secondWindowCreator():
     Label(secondWindowFrame,text=newTotal).grid(row=1,column=2)
     Label(secondWindowFrame,text= portfolioGrowth).grid(row=1,column=3)
 
-    Button(bottomWindowFrame,text='Portfolio Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=2,column=0)
-    Button(bottomWindowFrame,text='Close',command=root.destroy).grid(row=2,column=1)
+    Button(bottomWindowFrame,text='Refresh',command=secondWindowCreator).grid(row=0,column=0)
+    Button(bottomWindowFrame,text='Portfolio Pie Chart',command=lambda: pieChartCreator(sizes,labels,colors)).grid(row=0,column=1)
+    Button(bottomWindowFrame,text='Close',command=root.destroy).grid(row=0,column=2)
 
     secondWindowFrame.pack()
     thirdWindowFrame.pack(fill="both")
