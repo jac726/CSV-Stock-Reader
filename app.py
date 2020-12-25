@@ -22,28 +22,39 @@ secondWindowFrame = Frame(root)
 thirdWindowFrame = Frame(root)
 bottomWindowFrame = Frame(root)
 
+# Colors for pie chart
 colorList = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
+
+fileLocationFile = pd.read_csv('filelocation.csv')
 v = StringVar()
+fileLocation = ''
+
+if fileLocationFile.iloc[0][1] != 'blank':
+    v.set(fileLocationFile.iloc[0][1])
+    fileLocation = fileLocationFile.iloc[0][1]
+
 df = None
 df_checker = False
 
 def import_csv_data():
     # importing csv data to a df
     global v
-    global df
     global df_checker
     csv_file_path = askopenfilename()
+    tempFrame = pd.DataFrame({'File Location' : [csv_file_path]})
+    tempFrame.to_csv('filelocation.csv')
     v.set(csv_file_path)
-    df = pd.read_csv(csv_file_path)
-    df_checker = True
 
 def submit_button():
     # submit button to transition to second window dataframe
-    if df_checker:
+    global fileLocation
+    global df
+    try:
+        df = pd.read_csv(fileLocation)
         inputFrame.destroy()
         secondWindowCreator()
-    else:
+    except:
         window = Toplevel()
         label = Label(window,text="Must submit a file").pack()
         button_close = Button(window, text="Close",command = window.destroy).pack()
