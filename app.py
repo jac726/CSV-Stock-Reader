@@ -41,10 +41,12 @@ def import_csv_data():
     # importing csv data to a df
     global v
     global df_checker
+    global fileLocation
     csv_file_path = askopenfilename()
     tempFrame = pd.DataFrame({'File Location' : [csv_file_path]})
     tempFrame.to_csv('filelocation.csv')
     v.set(csv_file_path)
+    fileLocation = csv_file_path
 
 def submit_button():
     # submit button to transition to second window dataframe
